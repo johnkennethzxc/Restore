@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20260125174820_OrderEntityAdded")]
+    partial class OrderEntityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.2");
@@ -124,7 +127,6 @@ namespace API.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("PaymentIntentId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<long>("Subtotal")
@@ -292,14 +294,14 @@ namespace API.Data.Migrations
                         new
                         {
                             Id = "bb6d65cd-252b-4ed6-8fa3-19db4f434000",
-                            ConcurrencyStamp = "32877843-e7af-4e35-8a7a-331d96a93335",
+                            ConcurrencyStamp = "bd6d5ead-7eb4-4cdb-9c6b-8b175fee9000",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
                             Id = "bd801f29-8bfa-42d3-8121-dda97150f288",
-                            ConcurrencyStamp = "474a347b-2288-4842-ad17-9745e15f27da",
+                            ConcurrencyStamp = "73be972f-1f55-474d-aa5b-2316b1c4a9fb",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -508,7 +510,7 @@ namespace API.Data.Migrations
                         .WithMany("OrderItems")
                         .HasForeignKey("Orderid");
 
-                    b.OwnsOne("API.Entities.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
+                    b.OwnsOne("API.Entities.OrderAggregate.ProductItemOrdered", "Item", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
                                 .HasColumnType("INTEGER");
@@ -532,7 +534,7 @@ namespace API.Data.Migrations
                                 .HasForeignKey("OrderItemId");
                         });
 
-                    b.Navigation("ItemOrdered")
+                    b.Navigation("Item")
                         .IsRequired();
                 });
 

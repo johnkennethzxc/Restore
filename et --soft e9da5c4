@@ -1,0 +1,14 @@
+[33m51293fe[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Ignore db and env files
+[33m7bc01ff[m Merge branch 'recover-changes' Save 30+ code changes, ignore DB and env
+[33m7dddd4d[m[33m ([m[1;32mrecover-changes[m[33m)[m Ignore .env and SQLite database files
+[33m57bf1ab[m Stop tracking appsettings.Development.json (contains Stripe secret)
+[33me9da5c4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Stop tracking SQLite database files
+[33mcf96690[m End of section 10
+[33mfda7112[m End of section 9
+[33m5936324[m End of section 8
+[33mb3305ea[m End of section 7
+[33me81190f[m End of section 6
+[33me081c67[m End of section 5
+[33m62e479f[m End of section 4
+[33m0c2f636[m End of section 3
+[33m07e3934[m End of section 2
