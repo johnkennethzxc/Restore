@@ -2,6 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithErrorHandling } from "../../api/baseApi";
 import { Item, type Basket } from "../../models/basket";
 import type { Product } from "../../models/product";
+import Cookies from "js-cookie";
 
 function isBasketItem(product: Product | Item): product is Item {
   return (product as Item).quantity !== undefined;
@@ -31,7 +32,7 @@ export const basketApi = createApi({
       },
       onQueryStarted: async (
         { product, quantity },
-        { dispatch, queryFulfilled }
+        { dispatch, queryFulfilled },
       ) => {
         let isNewBasket = false;
 
@@ -45,7 +46,7 @@ export const basketApi = createApi({
 
             if (!isNewBasket) {
               const existingItem = draft.items.find(
-                (item) => item.productId === productId
+                (item) => item.productId === productId,
               );
 
               if (existingItem) existingItem.quantity += quantity;
@@ -53,10 +54,10 @@ export const basketApi = createApi({
                 draft.items.push(
                   isBasketItem(product)
                     ? product
-                    : { ...product, productId: product.id, quantity }
+                    : { ...product, productId: product.id, quantity },
                 );
             }
-          })
+          }),
         );
         try {
           await queryFulfilled;
@@ -77,12 +78,12 @@ export const basketApi = createApi({
       }),
       onQueryStarted: async (
         { productId, quantity },
-        { dispatch, queryFulfilled }
+        { dispatch, queryFulfilled },
       ) => {
         const patchResult = dispatch(
           basketApi.util.updateQueryData("fetchBasket", undefined, (draft) => {
             const itemIndex = draft.items.findIndex(
-              (item) => item.productId === productId
+              (item) => item.productId === productId,
             );
 
             if (itemIndex >= 0) {
@@ -91,7 +92,7 @@ export const basketApi = createApi({
                 draft.items.splice(itemIndex, 1);
               }
             }
-          })
+          }),
         );
 
         try {
@@ -102,6 +103,17 @@ export const basketApi = createApi({
         }
       },
     }),
+    clearBasket: builder.mutation<void, void>({
+      queryFn: () => ({ data: undefined }),
+      onQueryStarted: async (_, { dispatch }) => {
+        dispatch(
+          basketApi.util.updateQueryData("fetchBasket", undefined, (draft) => {
+            draft.items = [];
+          }),
+        );
+        Cookies.remove("basketId");
+      },
+    }),
   }),
 });
 
@@ -109,4 +121,5 @@ export const {
   useFetchBasketQuery,
   useAddbasketItemMutation,
   useRemoveBasketItemMutation,
+  useClearBasketMutation,
 } = basketApi;

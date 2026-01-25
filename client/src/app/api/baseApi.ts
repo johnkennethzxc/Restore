@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { router } from "../routes/Routes";
 
 const customBaseQuery = fetchBaseQuery({
-  baseUrl: "https://localhost:5001/api",
+  baseUrl: import.meta.env.VITE_API_URL,
   credentials: "include",
 });
 
@@ -19,7 +19,7 @@ const sleep = () => new Promise((resolve) => setTimeout(resolve, 1000));
 export const baseQueryWithErrorHandling = async (
   args: string | FetchArgs,
   api: BaseQueryApi,
-  extraOptions: object
+  extraOptions: object,
 ) => {
   //// Start loading
   api.dispatch(startLoading());

@@ -483,3 +483,9 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 API/appsettings.json
+API/appsettings.Development.json
+# Ignore local environment & database
+.env
+API/store.db
+API/store.db-shm
+API/store.db-wal

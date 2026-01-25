@@ -1,0 +1,25 @@
+diff --git a/API/store.db b/API/store.db
+deleted file mode 100644
+index e252c44..0000000
+Binary files a/API/store.db and /dev/null differ
+diff --git a/API/store.db-shm b/API/store.db-shm
+deleted file mode 100644
+index 20de298..0000000
+Binary files a/API/store.db-shm and /dev/null differ
+diff --git a/API/store.db-wal b/API/store.db-wal
+deleted file mode 100644
+index 1404a2d..0000000
+Binary files a/API/store.db-wal and /dev/null differ
+diff --git a/client/.gitignore b/client/.gitignore
+index a547bf3..1c8d07b 100644
+--- a/client/.gitignore
++++ b/client/.gitignore
+@@ -22,3 +22,8 @@ dist-ssr
+ *.njsproj
+ *.sln
+ *.sw?
++
++.env
++API/store.db
++API/store.db-shm
++API/store.db-wal
