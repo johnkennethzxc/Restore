@@ -2,8 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs;
 
-public class CreateProductDto
+public class UpdateProductDto
 {
+    public int Id { get; set; }
+
     [Required]
     public string Name { get; set; } = string.Empty;
 
@@ -14,8 +16,7 @@ public class CreateProductDto
     [Range(100, double.PositiveInfinity)]
     public long Price { get; set; }
 
-    [Required]
-    public IFormFile File { get; set; } = null!;
+    public IFormFile? File { get; set; }
 
     [Required]
     public required string Type { get; set; }
