@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, type FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createProductSchema,
@@ -19,9 +19,15 @@ type Props = {
   setEditMode: (value: boolean) => void;
   product: Product | null;
   refetch: () => void;
+  setSelectedProduct: (value: Product | null) => void;
 };
 
-export default function ProductForm({ setEditMode, product, refetch }: Props) {
+export default function ProductForm({
+  setEditMode,
+  product,
+  refetch,
+  setSelectedProduct,
+}: Props) {
   const {
     control,
     handleSubmit,
@@ -49,11 +55,26 @@ export default function ProductForm({ setEditMode, product, refetch }: Props) {
     };
   }, [product, reset, watchFile]);
 
+  const createFormData = (items: FieldValues) => {
+    const formData = new FormData();
+    for (const key in items) {
+      formData.append(key, items[key]);
+    }
+
+    return formData;
+  };
+
   const onSubmit = async (data: CreateProductSchema) => {
     try {
-      if (product) await updateProduct({ id: product.id, data }).unwrap();
-      else await createProduct(data).unwrap();
+      const formData = createFormData(data);
+
+      if (watchFile) formData.append("file", watchFile);
+
+      if (product)
+        await updateProduct({ id: product.id, data: formData }).unwrap();
+      else await createProduct(formData).unwrap();
       setEditMode(false);
+      setSelectedProduct(null);
       refetch();
     } catch (error) {
       console.log(error);

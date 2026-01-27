@@ -32,6 +32,7 @@ export default function InventoryPage() {
   const handleSelectProduct = (product: Product) => {
     setSelectedProduct(product);
     setEditMode(true);
+    setSelectedProduct = { setSelectedProduct };
   };
 
   const handleDeleteProduct = async (id: number) => {
