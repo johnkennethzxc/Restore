@@ -17,6 +17,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
        );;
 });
 builder.Services.AddCors();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddScoped<PaymentsService>();
 builder.Services.AddIdentityApiEndpoints<User>(opt =>
@@ -31,6 +32,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.UseCors(opt =>
 {
     opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://localhost:3000");
@@ -41,6 +45,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>();
+app.MapFallbackToController("Index", "Fallback");
 
 await DbInitializer.InitDb(app);
 

@@ -24,7 +24,7 @@ export const baseQueryWithErrorHandling = async (
   //// Start loading
   api.dispatch(startLoading());
 
-  await sleep();
+  if (import.meta.env.DEV) await sleep();
   const result = await customBaseQuery(args, api, extraOptions);
 
   //// Stop loading
